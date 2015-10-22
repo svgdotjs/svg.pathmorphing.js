@@ -1,0 +1,28 @@
+{
+  "name": "svg.pathmorphing.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Fuzzyma/svg.pathmorphing.js",
+  "authors": [
+    "Ulrich-Matthias Schäfer"
+  ],
+  "description": "Enables pathmorphing / path animation in svg.js",
+  "main": [
+    "./dist/svg.pathmorphing.js"
+  ],
+  "keywords": [
+    "svg.js",
+    "pathmorphing",
+    "animation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "svg.js":"^2.1.1"
+  }
+}
