@@ -8,7 +8,7 @@
     "pathmorphing",
     "animation"
   ],
-  "bugs": "https://github.com/Fuzzyma/svg.pathmorphing.js/issues",
+  "bugs": "https://github.com/svgdotjs/svg.pathmorphing.js/issues",
   "license": "MIT",
   "author": {
     "name": "Ulrich-Matthias Schäfer"
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Fuzzyma/svg.pathmorphing.js.git"
+    "url": "https://github.com/svgdotjs/svg.pathmorphing.js.git"
   },
   "engines": {
     "node": ">= 0.8.0"

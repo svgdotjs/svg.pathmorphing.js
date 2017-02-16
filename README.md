@@ -1,6 +1,6 @@
 # svg.pathmorphing.js
 
-A plugin for the [svgjs](https://github.com/wout/svg.js) library to enable path morphing / animation
+A plugin for the [svgjs](https://github.com/svgdotjs/svg.js) library to enable path morphing / animation
 
 The code of this plugin will move to the core when it's out of experimental status and shortened (to much space for one feature).
 
