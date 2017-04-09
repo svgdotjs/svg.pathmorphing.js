@@ -223,8 +223,6 @@ function toBeziere(val){
       val[5] = val[3]
       val[4] = val[2]
       val[3] = val[1]
-      val[2] = this.pos[1]
-      val[1] = this.pos[0]
       break
     case 'A':
       throw 'Cant morph arcs to beziere'
