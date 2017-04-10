@@ -1,5 +1,5 @@
-/*! svg.pathmorphing.js - v0.1.0 - 2015-10-22
-* Copyright (c) 2015 Ulrich-Matthias Schäfer; Licensed MIT */
+/*! svg.pathmorphing.js - v0.1.1 - 2017-04-10
+* Copyright (c) 2017 Ulrich-Matthias Schäfer; Licensed MIT */
 
 ;(function () {
 SVG.extend(SVG.PathArray, {
@@ -10,11 +10,11 @@ SVG.extend(SVG.PathArray, {
 
     var startOffsetM = 0
       ,  destOffsetM = 0
-      
+
     while(true){
       // stop if there is no M anymore
       if(startOffsetM === false && destOffsetM === false) break
-    
+
       // find the next M in path array
       startOffsetNextM = findNextM(startArr, startOffsetM === false ? false : startOffsetM+1)
        destOffsetNextM = findNextM( destArr,  destOffsetM === false ? false :  destOffsetM+1)
@@ -22,7 +22,7 @@ SVG.extend(SVG.PathArray, {
       // We have to add one M to the startArray
       if(startOffsetM === false){
         var bbox = new SVG.PathArray(result.start).bbox()
-        
+
         // when the last block had no bounding box we simply take the first M we got
         if(bbox.height == 0 || bbox.width == 0){
           startOffsetM =  startArr.push(startArr[0]) - 1
@@ -31,11 +31,11 @@ SVG.extend(SVG.PathArray, {
           startOffsetM = startArr.push( ['M', bbox.x + bbox.width/2, bbox.y + bbox.height/2 ] ) - 1
         }
       }
-      
+
       // We have to add one M to the destArray
       if( destOffsetM === false){
         var bbox = new SVG.PathArray(result.dest).bbox()
-        
+
         if(bbox.height == 0 || bbox.width == 0){
           destOffsetM =  destArr.push(destArr[0]) - 1
         }else{
@@ -49,7 +49,7 @@ SVG.extend(SVG.PathArray, {
       // update the arrays to their new values
       startArr = startArr.slice(0, startOffsetM).concat(result.start, startOffsetNextM === false ? [] : startArr.slice(startOffsetNextM))
        destArr =  destArr.slice(0,  destOffsetM).concat(result.dest ,  destOffsetNextM === false ? [] :  destArr.slice( destOffsetNextM))
-       
+
       // update offsets
       startOffsetM = startOffsetNextM === false ? false : startOffsetM + result.start.length
        destOffsetM =  destOffsetNextM === false ? false :  destOffsetM + result.dest.length
@@ -81,7 +81,7 @@ SVG.extend(SVG.PathArray, {
 
     return new SVG.PathArray(array)
   }
-  
+
 })
 
 
@@ -225,13 +225,13 @@ function toBeziere(val){
     case 'Q':
       val[6] = val[4]
       val[5] = val[3]
-      val[4] = val[2]
-      val[3] = val[1]
-      val[2] = this.pos[1]
-      val[1] = this.pos[0]
+      val[4] = val[2] * 1/3 + val[4] * 2/3
+      val[3] = val[1] * 1/3 + val[3] * 2/3
+      val[2] = this.pos[1] * 1/3 + val[2] * 2/3
+      val[1] = this.pos[0] * 1/3 + val[1] * 2/3
       break
     case 'A':
-      throw 'Cant morph arcs to beziere'
+      throw new Error('Cant morph arcs to beziere')
       break
   }
 
@@ -243,7 +243,7 @@ function toBeziere(val){
 
 }
 
-// fins the next position of type M
+// finds the next position of type M
 function findNextM(arr, offset){
 
   if(offset === false) return false

@@ -1,6 +1,6 @@
 {
   "name": "svg.pathmorphing.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Enables pathmorphing / path animation in svg.js",
   "main": "dist/svg.pathmorphing.js",
   "keywords": [
