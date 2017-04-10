@@ -221,8 +221,8 @@ function toBeziere(val){
     case 'Q':
       val[6] = val[4]
       val[5] = val[3]
-      val[4] = val[2] * 1/3 + val[4] * 2/3
-      val[3] = val[1] * 1/3 + val[3] * 2/3
+      val[4] = val[4] * 1/3 + val[2] * 2/3
+      val[3] = val[3] * 1/3 + val[1] * 2/3
       val[2] = this.pos[1] * 1/3 + val[2] * 2/3
       val[1] = this.pos[0] * 1/3 + val[1] * 2/3
       break
