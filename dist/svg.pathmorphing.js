@@ -1,7 +1,14 @@
-/*! svg.pathmorphing.js - v0.1.1 - 2017-07-23
-* Copyright (c) 2017 Ulrich-Matthias Schäfer; Licensed MIT */
+/*!
+* svg.pathmorphing.js - Enables pathmorphing / path animation in svg.js
+* @version 0.1.2
+*
+*
+* @copyright (c) 2018 Ulrich-Matthias Schäfer
+* @license MIT
+*/;
+;(function() {
+"use strict";
 
-;(function () {
 SVG.extend(SVG.PathArray, {
   morph: function(array) {
 
@@ -402,5 +409,4 @@ function arcToBeziere(pos, val) {
 
     return retVal
 }
-
-}).call(this);
+}());
