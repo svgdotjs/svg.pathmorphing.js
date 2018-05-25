@@ -1,6 +1,6 @@
 /*!
 * svg.pathmorphing.js - Enables pathmorphing / path animation in svg.js
-* @version 0.1.2
+* @version 0.1.3
 *
 *
 * @copyright (c) 2018 Ulrich-Matthias Schäfer
@@ -17,6 +17,9 @@ SVG.extend(SVG.PathArray, {
 
     var startOffsetM = 0
       ,  destOffsetM = 0
+
+    var startOffsetNextM = false
+      ,  destOffsetNextM = false
 
     while(true){
       // stop if there is no M anymore
