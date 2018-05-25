@@ -7,6 +7,9 @@ SVG.extend(SVG.PathArray, {
     var startOffsetM = 0
       ,  destOffsetM = 0
 
+    var startOffsetNextM = false
+      ,  destOffsetNextM = false
+
     while(true){
       // stop if there is no M anymore
       if(startOffsetM === false && destOffsetM === false) break
