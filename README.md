@@ -8,7 +8,7 @@ The code of this plugin will move to the core when it's out of experimental stat
 
 Install via npm:
 
-	$ npm install svj.js svg.pathmorphing.js
+	$ npm install svg.js svg.pathmorphing.js
 
 Or download the plugin from the github project:
 [https://github.com/svgdotjs/svg.pathmorphing.js.git](https://github.com/svgdotjs/svg.pathmorphing.js.git).
