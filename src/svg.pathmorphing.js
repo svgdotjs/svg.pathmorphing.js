@@ -1,8 +1,10 @@
-SVG.extend(SVG.PathArray, {
-  morph: function(array) {
+import {extend, PathArray, Point, Matrix} from '@svgdotjs/svg.js'
 
-    var startArr = this.value
-      ,  destArr = this.parse(array)
+extend(PathArray, {
+  morph: function(fromArray, toArray, pos, stepper, context) {
+
+    var startArr = this.parse(fromArray)
+      ,  destArr = this.parse(toArray)
 
     var startOffsetM = 0
       ,  destOffsetM = 0
@@ -20,7 +22,7 @@ SVG.extend(SVG.PathArray, {
 
       // We have to add one M to the startArray
       if(startOffsetM === false){
-        var bbox = new SVG.PathArray(result.start).bbox()
+        var bbox = new PathArray(result.start).bbox()
 
         // when the last block had no bounding box we simply take the first M we got
         if(bbox.height == 0 || bbox.width == 0){
@@ -33,7 +35,7 @@ SVG.extend(SVG.PathArray, {
 
       // We have to add one M to the destArray
       if( destOffsetM === false){
-        var bbox = new SVG.PathArray(result.dest).bbox()
+        var bbox = new PathArray(result.dest).bbox()
 
         if(bbox.height == 0 || bbox.width == 0){
           destOffsetM =  destArr.push(destArr[0]) - 1
@@ -55,12 +57,22 @@ SVG.extend(SVG.PathArray, {
 
     }
 
-    // copy back arrays
-    this.value = startArr
-    this.destination = new SVG.PathArray()
-    this.destination.value = destArr
+    // copy updated arrays for reference
+    this._array = startArr
+    this.destination = new PathArray()
+    this.destination._array = destArr;
 
-    return this
+    // update array values based on anomation position
+    const finalArr = this.fromArray(startArr.map(function (from, fromIndex) {
+
+      const step = destArr[fromIndex].map((to, toIndex) => {
+        if (toIndex === 0) return to;
+        return stepper.step(from[toIndex], destArr[fromIndex][toIndex], pos, context[fromIndex], context);
+      });
+      return step;
+    }));
+    
+    return finalArr;
   }
 })
 
@@ -257,7 +269,7 @@ function arcToBeziere(pos, val) {
     // See: https://www.w3.org/TR/SVG11/implnote.html#ArcOutOfRangeParameters
     var rx = Math.abs(val[1]), ry = Math.abs(val[2]), xAxisRotation = val[3] % 360
       , largeArcFlag = val[4], sweepFlag = val[5], x = val[6], y = val[7]
-      , A = new SVG.Point(pos), B = new SVG.Point(x, y)
+      , A = new Point(pos), B = new Point(x, y)
       , primedCoord, lambda, mat, k, c, cSquare, t, O, OA, OB, tetaStart, tetaEnd
       , deltaTeta, nbSectors, f, arcSegPoints, angle, sinAngle, cosAngle, pt, i, il
       , retVal = [], x1, y1, x2, y2
@@ -270,7 +282,7 @@ function arcToBeziere(pos, val) {
 
     // Ensure radii are large enough using the algorithm provided in the SVG spec
     // See: https://www.w3.org/TR/SVG11/implnote.html#ArcCorrectionOutOfRangeRadii
-    primedCoord = new SVG.Point((A.x-B.x)/2, (A.y-B.y)/2).transform(new SVG.Matrix().rotate(xAxisRotation))
+    primedCoord = new Point((A.x-B.x)/2, (A.y-B.y)/2).transform(new Matrix().rotate(xAxisRotation))
     lambda = (primedCoord.x * primedCoord.x) / (rx * rx) + (primedCoord.y * primedCoord.y) / (ry * ry)
     if(lambda > 1) {
       lambda = Math.sqrt(lambda)
@@ -279,7 +291,7 @@ function arcToBeziere(pos, val) {
     }
 
     // To simplify calculations, we make the arc part of a unit circle (rayon is 1) instead of an ellipse
-    mat = new SVG.Matrix().rotate(xAxisRotation).scale(1/rx, 1/ry).rotate(-xAxisRotation)
+    mat = new Matrix().rotate(xAxisRotation).scale(1/rx, 1/ry).rotate(-xAxisRotation)
     A = A.transform(mat)
     B = B.transform(mat)
 
@@ -322,10 +334,10 @@ function arcToBeziere(pos, val) {
     // the horizontal distance ratio is used to modify the y coordinate
     // That is because the center of the circle is perpendicular to the chord and perpendicular
     // lines are negative reciprocals
-    O = new SVG.Point((B.x+A.x)/2 + t*-k[1], (B.y+A.y)/2 + t*k[0])
+    O = new Point((B.x+A.x)/2 + t*-k[1], (B.y+A.y)/2 + t*k[0])
     // Move the center of the circle at the origin
-    OA = new SVG.Point(A.x-O.x, A.y-O.y)
-    OB = new SVG.Point(B.x-O.x, B.y-O.y)
+    OA = new Point(A.x-O.x, A.y-O.y)
+    OB = new Point(B.x-O.x, B.y-O.y)
 
     // Calculate the start and end angle
     tetaStart = Math.acos(OA.x/Math.sqrt(OA.x*OA.x + OA.y*OA.y))
@@ -362,8 +374,8 @@ function arcToBeziere(pos, val) {
       cosAngle = Math.cos(angle)
       sinAngle = Math.sin(angle)
 
-      pt = new SVG.Point(O.x+cosAngle, O.y+sinAngle)
-      arcSegPoints[i] = [new SVG.Point(pt.x+f*sinAngle, pt.y-f*cosAngle), pt, new SVG.Point(pt.x-f*sinAngle, pt.y+f*cosAngle)]
+      pt = new Point(O.x+cosAngle, O.y+sinAngle)
+      arcSegPoints[i] = [new Point(pt.x+f*sinAngle, pt.y-f*cosAngle), pt, new Point(pt.x-f*sinAngle, pt.y+f*cosAngle)]
 
       angle += deltaTeta
     }
@@ -374,7 +386,7 @@ function arcToBeziere(pos, val) {
     arcSegPoints[arcSegPoints.length-1][2] = arcSegPoints[arcSegPoints.length-1][1].clone()
 
     // Revert the transformation that was applied to make the arc part of a unit circle instead of an ellipse
-    mat = new SVG.Matrix().rotate(xAxisRotation).scale(rx, ry).rotate(-xAxisRotation)
+    mat = new Matrix().rotate(xAxisRotation).scale(rx, ry).rotate(-xAxisRotation)
     for (i = 0, il = arcSegPoints.length; i < il; i++) {
       arcSegPoints[i][0] = arcSegPoints[i][0].transform(mat)
       arcSegPoints[i][1] = arcSegPoints[i][1].transform(mat)
