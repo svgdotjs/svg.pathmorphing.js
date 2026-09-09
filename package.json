@@ -1,8 +1,34 @@
 {
-  "name": "svg.pathmorphing.js",
-  "version": "0.1.3",
+  "name": "@svgdotjs/svg.pathmorphing.js",
+  "version": "0.2.0",
   "description": "Enables pathmorphing / path animation in svg.js",
+  "type": "module",
+  "packageManager": "pnpm@11.26.0",
   "main": "dist/svg.pathmorphing.js",
+  "module": "dist/svg.pathmorphing.mjs",
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./dist/svg.pathmorphing.d.mts",
+        "default": "./dist/svg.pathmorphing.mjs"
+      },
+      "import": {
+        "types": "./dist/svg.pathmorphing.d.mts",
+        "default": "./dist/svg.pathmorphing.mjs"
+      },
+      "require": {
+        "types": "./dist/svg.pathmorphing.d.ts",
+        "default": "./dist/svg.pathmorphing.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "unpkg": "dist/svg.pathmorphing.js",
+  "jsdelivr": "dist/svg.pathmorphing.js",
+  "files": [
+    "/dist",
+    "!/dist/*.zip"
+  ],
   "keywords": [
     "svg.js",
     "pathmorphing",
@@ -10,34 +36,39 @@
   ],
   "bugs": "https://github.com/svgdotjs/svg.pathmorphing.js/issues",
   "license": "MIT",
+  "typings": "./dist/svg.pathmorphing.d.ts",
   "author": "Ulrich-Matthias Schäfer",
   "contributors": [
     {
       "name": "Ulrich-Matthias Schäfer"
     }
   ],
-  "files": [
-    "dist/"
-  ],
+  "homepage": "https://github.com/svgdotjs/svg.pathmorphing.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/svgdotjs/svg.pathmorphing.js.git"
+    "url": "git+https://github.com/svgdotjs/svg.pathmorphing.js.git"
   },
-  "engines": {
-    "node": ">= 0.8.0"
+  "scripts": {
+    "build": "pnpm fix && vite build",
+    "demo": "vite demo",
+    "demo:build": "vite build demo --outDir ../demo-dist --emptyOutDir",
+    "fix": "prettier --write . && eslint --fix .",
+    "lint": "prettier --check . && eslint .",
+    "prepublishOnly": "rm -rf ./dist && pnpm build && pnpm zip",
+    "test": "node --test test/*.test.js",
+    "zip": "zip -j dist/svg.pathmorphing.js.zip -- LICENSE README.md dist/svg.pathmorphing.js"
+  },
+  "peerDependencies": {
+    "@svgdotjs/svg.js": "^3.2.4"
   },
   "devDependencies": {
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-header": "^1.8.8",
-    "gulp-iife": "^0.3.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-standard": "^10.0.0",
-    "gulp-trimlines": "^1.0.1",
-    "gulp-uglify": "^2.1.2",
-    "gulp-wrap-iife": "0.0.1"
-  },
-  "dependencies": {
-    "svg.js": "^2.4.0"
+    "@eslint/js": "^10.0.1",
+    "@svgdotjs/svg.js": "^3.2.8",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
+    "svgdom": "^0.1.29",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
   }
 }
