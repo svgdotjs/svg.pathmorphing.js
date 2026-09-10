@@ -11,38 +11,38 @@ const scenarios = [
     name: 'Blob morph (issue #9)',
     from: blobA,
     to: blobB,
-    spring: true,
+    spring: true
   },
   {
     name: 'H / V shorthand',
     from: 'M150 0 L75 200 L225 200 Z',
     to: 'M100 0 H190 V90 H100 Z',
-    spring: false,
+    spring: false
   },
   {
     name: 'Quadratic → quadratic',
     from: 'M30 150 Q120 40 210 150',
     to: 'M30 150 Q150 250 210 150',
-    spring: false,
+    spring: false
   },
   {
     name: 'Elliptical arc → cubic bezier',
     from: 'M30 150 A50 50 0 0 1 270 150',
     to: 'M30 150 A60 40 15 1 1 270 150',
-    spring: false,
+    spring: false
   },
   {
     name: 'Subpath count mismatch',
     from: 'M40 60 L110 60 L110 130 L40 130 Z M160 200 L230 200 L230 270 L160 270 Z',
     to: 'M100 60 L200 60 L200 140 L100 140 Z',
-    spring: false,
+    spring: false
   },
   {
     name: 'Line rectangle → curved blob',
     from: 'M40 40 L260 40 L260 260 L40 260 Z',
     to: 'M40 40 Q260 40 260 260 L40 260 Z',
-    spring: false,
-  },
+    spring: false
+  }
 ]
 
 // ---- canvas ------------------------------------------------------------
@@ -117,7 +117,7 @@ function randomBlob(cx, cy) {
     pts.push(
       (cx + (Math.random() - 0.5) * 120).toFixed(0) +
         ' ' +
-        (cy + (Math.random() - 0.5) * 120).toFixed(0),
+        (cy + (Math.random() - 0.5) * 120).toFixed(0)
     )
   }
   return 'M' + pts.join(' L') + ' Z'
@@ -222,7 +222,7 @@ scene.addEventListener('click', (e) => {
     name: 'continuous retarget',
     from: currentScenario.from,
     to: target,
-    spring: true,
+    spring: true
   }
   status.textContent = 'spring mode: click the canvas to retarget mid-flight'
 })

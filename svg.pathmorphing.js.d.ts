@@ -7,7 +7,7 @@ declare module '@svgdotjs/svg.js' {
       to: number,
       pos: number,
       context: any,
-      allContexts: any[],
+      allContexts: any[]
     ): number
   }
 
@@ -17,7 +17,7 @@ declare module '@svgdotjs/svg.js' {
       toArray: any[],
       pos: number,
       stepper: Stepper,
-      context: any[],
+      context: any[]
     ): PathArray
   }
 }

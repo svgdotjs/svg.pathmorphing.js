@@ -1,6 +1,6 @@
 {
   "name": "@svgdotjs/svg.pathmorphing.js",
-  "version": "0.2.0",
+  "version": "0.1.3",
   "description": "Enables pathmorphing / path animation in svg.js",
   "type": "module",
   "packageManager": "pnpm@11.26.0",
@@ -49,24 +49,22 @@
     "url": "git+https://github.com/svgdotjs/svg.pathmorphing.js.git"
   },
   "scripts": {
-    "build": "pnpm fix && vite build",
+    "build": "pnpm fix && tsc && vite build",
     "demo": "vite demo",
     "demo:build": "vite build demo --outDir ../demo-dist --emptyOutDir",
-    "fix": "prettier --write . && eslint --fix .",
-    "lint": "prettier --check . && eslint .",
+    "fix": "oxfmt --write . && oxlint -D correctness --fix .",
+    "lint": "oxfmt --check . && oxlint -D correctness .",
     "prepublishOnly": "rm -rf ./dist && pnpm build && pnpm zip",
     "test": "node --test test/*.test.js",
     "zip": "zip -j dist/svg.pathmorphing.js.zip -- LICENSE README.md dist/svg.pathmorphing.js"
   },
   "peerDependencies": {
-    "@svgdotjs/svg.js": "^3.2.4"
+    "@svgdotjs/svg.js": "^3.2.8"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@svgdotjs/svg.js": "^3.2.8",
-    "eslint": "^10.10.0",
-    "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.6",
+    "oxfmt": "^0.67.0",
+    "oxlint": "^1.82.0",
     "svgdom": "^0.1.28",
     "typescript": "^7.0.2",
     "vite": "^8.2.2"

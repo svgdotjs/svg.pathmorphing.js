@@ -24,7 +24,7 @@ extend(PathArray, {
       })
 
     return this.fromArray(finalArr)
-  },
+  }
 })
 
 // Aligning two paths is expensive (both are reparsed, every segment is
@@ -53,11 +53,11 @@ function align(morphObj, fromArray, toArray) {
     // find the next M in path array
     startOffsetNextM = findNextM(
       startArr,
-      startOffsetM === false ? false : startOffsetM + 1,
+      startOffsetM === false ? false : startOffsetM + 1
     )
     destOffsetNextM = findNextM(
       destArr,
-      destOffsetM === false ? false : destOffsetM + 1,
+      destOffsetM === false ? false : destOffsetM + 1
     )
 
     // We have to add one M to the startArray
@@ -73,7 +73,7 @@ function align(morphObj, fromArray, toArray) {
           startArr.push([
             'M',
             bbox.x + bbox.width / 2,
-            bbox.y + bbox.height / 2,
+            bbox.y + bbox.height / 2
           ]) - 1
       }
     }
@@ -89,7 +89,7 @@ function align(morphObj, fromArray, toArray) {
           destArr.push([
             'M',
             bbox.x + bbox.width / 2,
-            bbox.y + bbox.height / 2,
+            bbox.y + bbox.height / 2
           ]) - 1
       }
     }
@@ -101,7 +101,7 @@ function align(morphObj, fromArray, toArray) {
       startOffsetNextM,
       destArr,
       destOffsetM,
-      destOffsetNextM,
+      destOffsetNextM
     )
 
     // update the arrays to their new values
@@ -109,13 +109,13 @@ function align(morphObj, fromArray, toArray) {
       .slice(0, startOffsetM)
       .concat(
         result.start,
-        startOffsetNextM === false ? [] : startArr.slice(startOffsetNextM),
+        startOffsetNextM === false ? [] : startArr.slice(startOffsetNextM)
       )
     destArr = destArr
       .slice(0, destOffsetM)
       .concat(
         result.dest,
-        destOffsetNextM === false ? [] : destArr.slice(destOffsetNextM),
+        destOffsetNextM === false ? [] : destArr.slice(destOffsetNextM)
       )
 
     // update offsets
@@ -137,12 +137,12 @@ function handleBlock(
   startOffsetNextM,
   destArr,
   destOffsetM,
-  destOffsetNextM,
+  destOffsetNextM
 ) {
   // slice out the block we need
   var startArrTemp = startArr.slice(
       startOffsetM,
-      startOffsetNextM || undefined,
+      startOffsetNextM || undefined
     ),
     destArrTemp = destArr.slice(destOffsetM, destOffsetNextM || undefined)
 
@@ -151,13 +151,13 @@ function handleBlock(
       pos: [0, 0],
       start: [0, 0],
       reflection: [0, 0],
-      qReflection: [0, 0],
+      qReflection: [0, 0]
     },
     posDest = {
       pos: [0, 0],
       start: [0, 0],
       reflection: [0, 0],
-      qReflection: [0, 0],
+      qReflection: [0, 0]
     }
 
   do {
@@ -178,11 +178,11 @@ function handleBlock(
       // if not, convert shapes to beziere
       Array.prototype.splice.apply(
         startArrTemp,
-        [i, 1].concat(toBeziere.call(posStart, startArrTemp[i])),
+        [i, 1].concat(toBeziere.call(posStart, startArrTemp[i]))
       )
       Array.prototype.splice.apply(
         destArrTemp,
-        [i, 1].concat(toBeziere.call(posDest, destArrTemp[i])),
+        [i, 1].concat(toBeziere.call(posDest, destArrTemp[i]))
       )
     } else {
       // only update positions otherwise
@@ -202,7 +202,7 @@ function handleBlock(
         posStart.pos[0],
         posStart.pos[1],
         posStart.pos[0],
-        posStart.pos[1],
+        posStart.pos[1]
       ])
     }
 
@@ -215,7 +215,7 @@ function handleBlock(
         posDest.pos[0],
         posDest.pos[1],
         posDest.pos[0],
-        posDest.pos[1],
+        posDest.pos[1]
       ])
     }
   } while (true)
@@ -392,7 +392,7 @@ function arcToBeziere(pos, val) {
   // Ensure radii are large enough using the algorithm provided in the SVG spec
   // See: https://www.w3.org/TR/SVG11/implnote.html#ArcCorrectionOutOfRangeRadii
   primedCoord = new Point((A.x - B.x) / 2, (A.y - B.y) / 2).transform(
-    new Matrix().rotate(xAxisRotation),
+    new Matrix().rotate(xAxisRotation)
   )
   lambda =
     (primedCoord.x * primedCoord.x) / (rx * rx) +
@@ -495,7 +495,7 @@ function arcToBeziere(pos, val) {
     arcSegPoints[i] = [
       new Point(pt.x + f * sinAngle, pt.y - f * cosAngle),
       pt,
-      new Point(pt.x - f * sinAngle, pt.y + f * cosAngle),
+      new Point(pt.x - f * sinAngle, pt.y + f * cosAngle)
     ]
 
     angle += deltaTeta

@@ -62,7 +62,3 @@ $ pnpm fix               # auto-fix both
 $ pnpm build             # build dist/
 $ pnpm demo              # vite dev server for the demo
 ```
-
-The source lives in `src/`; `dist/` is generated and not committed. The demo
-covers scrubbing, H/V shorthand, quadratic and arc morphs, subpath mismatches
-and continuous retargeting with a Spring controller.
