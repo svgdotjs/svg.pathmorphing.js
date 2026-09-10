@@ -49,12 +49,12 @@
     "url": "git+https://github.com/svgdotjs/svg.pathmorphing.js.git"
   },
   "scripts": {
-    "build": "pnpm fix && tsc && vite build",
+    "build": "tsc && vite build",
     "demo": "vite demo",
     "demo:build": "vite build demo --outDir ../demo-dist --emptyOutDir",
     "fix": "oxfmt --write . && oxlint -D correctness --fix .",
     "lint": "oxfmt --check . && oxlint -D correctness .",
-    "prepublishOnly": "rm -rf ./dist && pnpm build && pnpm zip",
+    "prepublishOnly": "rm -rf ./dist && pnpm lint && pnpm build && pnpm zip",
     "test": "node --test test/*.test.js",
     "zip": "zip -j dist/svg.pathmorphing.js.zip -- LICENSE README.md dist/svg.pathmorphing.js"
   },
