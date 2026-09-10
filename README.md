@@ -66,9 +66,3 @@ $ pnpm demo              # vite dev server for the demo
 The source lives in `src/`; `dist/` is generated and not committed. The demo
 covers scrubbing, H/V shorthand, quadratic and arc morphs, subpath mismatches
 and continuous retargeting with a Spring controller.
-
-## Releases
-
-`pnpm publish` runs `prepublishOnly`, which builds `dist/` and packages
-`dist/svg.pathmorphing.js.zip` (LICENSE, README and the global build). Attach
-that zip to the GitHub release.
