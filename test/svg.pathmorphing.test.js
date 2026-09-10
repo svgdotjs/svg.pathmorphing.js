@@ -7,7 +7,7 @@ import {
   Ease,
   Spring,
   Morphable,
-  SVG,
+  SVG
 } from '@svgdotjs/svg.js'
 import '../src/svg.pathmorphing.js'
 
@@ -34,7 +34,7 @@ test('parses and interpolates two matching L paths', () => {
   const res = morphAt(
     'M10 10 L100 10 L100 100 Z',
     'M50 50 L150 50 L150 150 Z',
-    0.5,
+    0.5
   )
   assert.deepEqual(Array.from(res[0]), ['M', 30, 30])
   assert.deepEqual(Array.from(res[1]), ['L', 125, 30])
@@ -45,7 +45,7 @@ test('morph at pos 0 returns the from path (shorthand normalized)', () => {
   const res = morphAt(
     'M10 10 L100 10 L100 100 Z',
     'M50 50 L150 50 L150 150 Z',
-    0,
+    0
   )
   // Z is expanded to an explicit closing L by the alignment
   assert.deepEqual(Array.from(res[0]), ['M', 10, 10])
@@ -56,7 +56,7 @@ test('morph at pos 1 returns the to path (shorthand normalized)', () => {
   const res = morphAt(
     'M10 10 L100 10 L100 100 Z',
     'M50 50 L150 50 L150 150 Z',
-    1,
+    1
   )
   assert.deepEqual(Array.from(res[0]), ['M', 50, 50])
   assert.deepEqual(Array.from(res[3]), ['L', 50, 50])
@@ -66,7 +66,7 @@ test('synchronizes shorthand H and V commands', () => {
   const res = morphAt(
     'M150 0 L75 200 L225 200 Z',
     'M100 0 H190 V90 H100 Z',
-    0.5,
+    0.5
   )
   // all command letters must match so the result is a valid path
   assert.deepEqual(lettersOf(res), ['M', 'L', 'L', 'L', 'C'])
@@ -85,7 +85,7 @@ test('converts elliptical arc commands to cubic bezier', () => {
   const res = morphAt('M0 0 A40 40 0 0 1 80 0', 'M0 0 A40 40 0 1 1 80 0', 0.5)
   assert.ok(
     lettersOf(res).includes('C'),
-    'arc should be converted to cubic beziers',
+    'arc should be converted to cubic beziers'
   )
 })
 
@@ -93,7 +93,7 @@ test('morphs multiple subpaths', () => {
   const res = morphAt(
     'M10 10 L20 20 Z M50 50 L60 60 Z',
     'M10 10 L20 20 Z M70 70 L80 80 Z',
-    0.5,
+    0.5
   )
   const letters = lettersOf(res)
   assert.ok(letters.filter((l) => l === 'M').length >= 2, 'keeps both subpaths')
@@ -109,7 +109,7 @@ test('end to end time based animation drives the d attribute', () => {
   while (!runner.done && guard++ < 1000) runner.step(16)
   assert.equal(
     path.attr('d').trim(),
-    'M100 0L190 0L190 90L100 90C100 90 100 0 100 0',
+    'M100 0L190 0L190 90L100 90C100 90 100 0 100 0'
   )
 })
 
@@ -124,7 +124,7 @@ test('continuous morphing with Spring converges to the destination', () => {
     runner.step(16)
     assert.ok(
       typeof path.attr('d') === 'string' && path.attr('d').length > 0,
-      'd attribute stays valid',
+      'd attribute stays valid'
     )
   }
   assert.ok(guard < 2000, 'spring animation converges')
@@ -174,7 +174,7 @@ test('shorthand S mirrors the preceding cubic control point', () => {
   const res = morphAt(
     'M0 0 C0 10 10 10 10 0 S30 -10 30 0',
     'M0 0 C0 20 10 20 10 0 S30 -20 30 0',
-    0,
+    0
   )
   // reflection of (10, 10) through the current point (10, 0)
   assert.deepEqual(Array.from(res[2]), ['C', 10, -10, 30, -10, 30, 0])
@@ -205,7 +205,7 @@ test('reuses the alignment across frames but not across destinations', () => {
     flat('M50 50 L150 50 L150 150 Z'),
     1,
     new Ease('-'),
-    [],
+    []
   )
   assert.deepEqual(Array.from(a[0]), ['M', 50, 50])
 
@@ -215,7 +215,7 @@ test('reuses the alignment across frames but not across destinations', () => {
     flat('M20 20 L80 20 L80 80 Z'),
     1,
     new Ease('-'),
-    [],
+    []
   )
   assert.deepEqual(Array.from(b[0]), ['M', 20, 20])
   assert.deepEqual(Array.from(b[1]), ['L', 80, 20])
@@ -232,7 +232,7 @@ test('a running Spring can be retargeted mid flight', () => {
     'M100 0 L100 200 L200 200 Z',
     'M0 0 A50 50 0 1 1 100 100 A50 50 0 1 1 0 0 Z',
     'M20 20 L60 20 L60 60 L20 60 Z M120 120 L180 120 L180 180 Z',
-    'M10 10 Q80 -40 150 10 T290 10',
+    'M10 10 Q80 -40 150 10 T290 10'
   ]
 
   for (const target of targets) {
