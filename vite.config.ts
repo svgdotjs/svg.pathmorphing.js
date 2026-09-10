@@ -65,10 +65,11 @@ export default defineConfig({
           globals: { '@svgdotjs/svg.js': 'SVG' },
           banner: headerLong,
           minify: true,
+          // without this the minifier drops the banner
+          comments: { legal: true },
         },
         // Must stay esm, so it resolves svg.js through the same import
-        // condition the consumer used. A cjs copy would extend a second,
-        // unrelated PathArray.
+        // condition the consumer used.
         {
           format: 'es',
           entryFileNames: 'svg.pathmorphing.mjs',
